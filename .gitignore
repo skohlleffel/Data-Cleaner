@@ -1,3 +1,5 @@
 .idea
 venv
 mock_sheets
+.pytest_cache
+__pycache__

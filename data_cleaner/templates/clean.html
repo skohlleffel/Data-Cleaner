@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+  <script>
+    (function () {
+
+      window.ldfdr = window.ldfdr || {};
+      (function (d, s, ss, fs) {
+        fs = d.getElementsByTagName(s)[0];
+
+        function ce(src) {
+          var cs = d.createElement(s);
+          cs.src = src;
+          setTimeout(function () { fs.parentNode.insertBefore(cs, fs) }, 1);
+        }
+
+        ce(ss);
+      })(document, 'script', 'https://sc.lfeeder.com/lftracker_v1_lAxoEaKW6dBaOYGd.js');
+    })();
+  </script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-158371739-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-158371739-3');
+  </script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes" />
+  <title>Snowflake Data Profiler by Hashmap</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+    integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/main.css') }}">
+</head>
+
+<header class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" href="https://www.hashmapinc.com/" target="_blank">
+    <img src="/static/hashmap_banner_white.png" width="200px" />
+  </a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <div class="mx-auto my-2 text-white">
+      <h3>Snowflake Data Profiler</h3>
+    </div>
+
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="https://www.hashmapinc.com/snowflakedataprofiler-reachout" target="_blank">Contact
+          Us</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="https://forms.gle/WfiB6YctX5Jg2zTs6" target="_blank">Feedback </a>
+      </li>
+      <li class="nav-item">
+        <a href="{{ url_for('static', filename='sample_reports/sample-profile.html') }}" target="_blank" class="nav-item btn btn-primary ml-3">
+          See a Sample Profile
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<body>
+  <div class="container">
+    <div class="py-5 text-center">
+      <h2>Generate a data profile of the first 10K rows of one of your Snowflake tables</h2>
+
+      {% if error %}
+      <p class="error">{{ error }}</p>
+      {% endif %}
+
+      <div id='spinner' class="spinner-border text-primary" style="width: 5rem; height: 5rem; display:none;"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-8 col-xs-12 order-md-1 mx-auto">
+        <h4 class="mb-3">Snowflake details:</h4>
+        <form method="POST" action="" enctype="multipart/form-data">
+            
+        </form>
+        
+        <form class="needs-validation" action="" method="post" enctype="multipart/form-data">
+          
+          <div class="mb-3">
+            <label for="path">File</label>
+            <input type="file" class="form-control" id="path" name="path" placeholder="this_is_a_file.csv" required="">
+            <div class="invalid-feedback">
+                Please enter a file.
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <label for="cap_list">Capitalization List <span class="text-muted">(Optional)</span></label>
+            <input type="text" class="form-control" id="cap_list" name="cap_list" placeholder="cap_list">
+          </div>
+
+          <div class="mb-3">
+            <label for="email_list">Email list <span class="text-muted">(Optional)</span></label>
+            <input type="text" class="form-control" id="email_list" name="email_list" placeholder="email_list">
+          </div>
+
+          <div class="mb-3">
+            <label for="num_list">Numerical List <span class="text-muted">(Optional)</span></label>
+            <input type="text" class="form-control" id="num_list" name="num_list" placeholder="num_list" required="">
+          </div>
+          
+          <div class="mb-3">
+            <label for="part_list">Partners List <span class="text-muted">(Optional)</span></label>
+            <input type="text" class="form-control" id="part_list" name="part_list" placeholder="part_list" required="">
+          </div>
+          
+          <div class="mb-3">
+            <label for="drop_list">Drop Empty Values List</label>
+            <input type="text" class="form-control" id="drop_list" name="drop_list" placeholder="drop_list" required="">
+          </div>
+
+          <button class="btn btn-primary btn-lg btn-block" type="submit" id="submit_button">
+            Create data profile
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class='spacer'/>
+  </div>
+
+  <!-- Start of HubSpot Embed Code -->
+  <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/4376150.js"></script>
+  <!-- End of HubSpot Embed Code -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+    <script>
+      // Form validity check.
+      (function() {
+        'use strict';
+
+        window.addEventListener('load', function() {
+          // Fetch all the forms we want to apply custom Bootstrap validation styles to
+          var forms = document.getElementsByClassName('needs-validation');
+
+          // Loop over them and prevent submission
+          var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+              if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+              } else {
+                $("#spinner").show();
+              }
+              form.classList.add('was-validated');
+            }, false);
+          });
+        }, false);
+      })();
+    </script>
+</body>
+
+</html>
